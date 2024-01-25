@@ -64,7 +64,8 @@ The auto-installer below contains the following software: **PHP**, **MariaDB**, 
 ```
 wget -O - https://get.ispconfig.org | sh -s -- --use-nginx --use-ftp-ports=40110-40210 --unattended-upgrades
 ```
-We can easily choose not to use certain functions or install extra services by passing arguments to the installer
+We can easily choose not to use certain functions or to install additional services by passing arguments to the installer
+to install additional services ```--use-``` to choose not to use certain functions ```--no-```. 
 <a name="step-5-configure-ispconfig"></a>
 ## Step 5: Configure ISPConfig
 ...
