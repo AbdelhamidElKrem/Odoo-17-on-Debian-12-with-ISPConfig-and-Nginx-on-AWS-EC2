@@ -180,8 +180,9 @@ to install additional services ```--use-``` to choose not to use certain functio
     nano /etc/nginx/sites-available/test.server1.example.com
     ```
 add this following configuration to the server
+
     ```
-    location / {
+        location / {
                 proxy_pass http://localhost:8069/;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
