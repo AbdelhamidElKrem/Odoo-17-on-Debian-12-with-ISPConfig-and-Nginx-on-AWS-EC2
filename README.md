@@ -60,7 +60,11 @@ sudo apt update && sudo apt upgrade
 
 <a name="step-4-install-ispconfig-with-nginx-web-server"></a>
 ## Step 4: Install ISPConfig with Nginx Web Server
-...
+The auto-installer below contains the following software: **PHP**, **MariaDB**, **Postfix**, **Dovecot**, **Rspamd**, **BIND**, **Jailkit**, **Roundcube**, **PHPMyAdmin**, **Mailman**, **Webalizer**, **AWStats** and **GoAccess**.
+```
+wget -O - https://get.ispconfig.org | sh -s -- --use-nginx --use-ftp-ports=40110-40210 --unattended-upgrades
+```
+We can easily choose not to use certain functions or install extra services by passing arguments to the installer
 <a name="step-5-configure-ispconfig"></a>
 ## Step 5: Configure ISPConfig
 ...
