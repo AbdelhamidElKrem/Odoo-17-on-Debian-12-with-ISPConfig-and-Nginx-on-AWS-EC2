@@ -25,45 +25,45 @@
 > :warning: **Nota Bene:** When following the instructions, be sure to replace `server1.example.com` in the `/etc/hosts` file with your actual server's hostname. This is crucial for the correct network configuration of your server.
 
 1. Edit `/etc/hosts`file :
-```
-nano /etc/hosts
-```
-```
-127.0.0.1  localhost.localdomain   localhost
-# This line should be changed to the correct servername:
-127.0.1.1  server1.example.com server1
-
-# The following lines are desirable for IPv6 capable hosts
-::1       localhost ip6-localhost ip6-loopback
-ff02::1   ip6-allnodes
-ff02::2   ip6-allrouters
-```
+    ```
+    nano /etc/hosts
+    ```
+    ```
+    127.0.0.1  localhost.localdomain   localhost
+    # This line should be changed to the correct servername:
+    127.0.1.1  server1.example.com server1
+    
+    # The following lines are desirable for IPv6 capable hosts
+    ::1       localhost ip6-localhost ip6-loopback
+    ff02::1   ip6-allnodes
+    ff02::2   ip6-allrouters
+    ```
 
 2. Edit `/etc/hostname` file
-```
-nano /etc/hostname
-```
-```
-server1
-```
+    ```
+    nano /etc/hostname
+    ```
+    ```
+    server1
+    ```
 3. Reboot the server
-```
-systemctl reboot
-```
+    ```
+    systemctl reboot
+    ```
 <a name="step-3-update-operating-system"></a>
 ## Step 3: Update Operating System
 **Disk Space Confirmation:** A message will appear indicating the additional disk space required for the update. Confirm to proceed by typing **`Y`** 
-```
-sudo apt update && sudo apt upgrade
-```
+    ```
+    sudo apt update && sudo apt upgrade
+    ```
 
 
 <a name="step-4-install-ispconfig-with-nginx-web-server"></a>
 ## Step 4: Install ISPConfig with Nginx Web Server
 The auto-installer below contains the following software: **PHP**, **MariaDB**, **Postfix**, **Dovecot**, **Rspamd**, **BIND**, **Jailkit**, **Roundcube**, **PHPMyAdmin**, **Mailman**, **Webalizer**, **AWStats** and **GoAccess**.
-```
-wget -O - https://get.ispconfig.org | sh -s -- --use-nginx --use-ftp-ports=40110-40210 --unattended-upgrades
-```
+    ```
+    wget -O - https://get.ispconfig.org | sh -s -- --use-nginx --use-ftp-ports=40110-40210 --unattended-upgrades
+    ```
 We can easily choose not to use certain functions or to install additional services by passing arguments to the installer
 to install additional services ```--use-``` to choose not to use certain functions ```--no-```. 
 <a name="step-5-configure-ispconfig"></a>
@@ -77,56 +77,56 @@ to install additional services ```--use-``` to choose not to use certain functio
 **Configure the firewall to allow ports:** `20, 21, 22, 25, 80, 443, 40110-40210, 110, 143, 465, 587, 993, 995, 53, 8080, 8081`.
 <a name="step-7-install-dependencies-for-odoo"></a>
 ## Step 7: Install Dependencies for Odoo
-```
-sudo apt install python3 python3-dev python3-pip python3-venv python3-setuptools build-essential libzip-dev libxslt1-dev libldap2-dev python3-wheel libsasl2-dev node-less libjpeg-dev xfonts-75dpi xfonts-base libpq-dev libffi-dev fontconfig git wget nodejs npm
-```
+    ```
+    sudo apt install python3 python3-dev python3-pip python3-venv python3-setuptools build-essential libzip-dev libxslt1-dev libldap2-dev python3-wheel libsasl2-dev node-less libjpeg-dev xfonts-75dpi xfonts-base libpq-dev libffi-dev fontconfig git wget nodejs npm
+    ```
 <a name="step-8-install-and-configure-postgresql"></a>
 ## Step 8: Install and Configure PostgreSQL
 1. Install PostgreSQL
-```
-sudo apt-get install postgresql-15
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-```
+    ```
+    sudo apt-get install postgresql-15
+    sudo systemctl start postgresql
+    sudo systemctl enable postgresql
+    ```
 2. Create a PostgreSQL user for Odoo
-```
-sudo su - postgres -c "createuser -s odoo"
-```
+    ```
+    sudo su - postgres -c "createuser -s odoo"
+    ```
 <a name="step-9-install-nodejs-and-wkhtmltopdf"></a>
 ## Step 9: Install Node.js and wkhtmltopdf
 1. Install Node.js and npm
-```
-sudo apt install nodejs npm
-sudo npm install -g rtlcss
-```
+    ```
+    sudo apt install nodejs npm
+    sudo npm install -g rtlcss
+    ```
 2. Install wkhtmltopdf
-```
-wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
-sudo dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
-```
+    ```
+    wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
+    sudo dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
+    ```
 <a name="step-10-create-an-odoo-user-and-install-odoo"></a>
 ## Step 10: Create an Odoo User and Install Odoo
 1. Create a user for Odoo
-```
-sudo adduser --system --group --home=/opt/odoo --shell=/bin/bash odoo
-sudo su - odoo
-```
+    ```
+    sudo adduser --system --group --home=/opt/odoo --shell=/bin/bash odoo
+    sudo su - odoo
+    ```
 2. Clone the Odoo repository and install dependencies:
-```
-git clone https://www.github.com/odoo/odoo --depth 1 --branch 17.0 /opt/odoo/odoo
-python3 -m venv odoo-env
-source odoo-env/bin/activate
-pip3 install wheel
-pip3 install -r odoo/requirements.txt
-deactivate
-```
+    ```
+    git clone https://www.github.com/odoo/odoo --depth 1 --branch 17.0 /opt/odoo/odoo
+    python3 -m venv odoo-env
+    source odoo-env/bin/activate
+    pip3 install wheel
+    pip3 install -r odoo/requirements.txt
+    deactivate
+    ```
 3. Create a directory for custom addons and set permissions:
-```
-mkdir /opt/odoo/custom-addons
-exit
-sudo mkdir /var/log/odoo
-sudo chown odoo:odoo /var/log/odoo
-```
+    ```
+    mkdir /opt/odoo/custom-addons
+    exit
+    sudo mkdir /var/log/odoo
+    sudo chown odoo:odoo /var/log/odoo
+    ```
 <a name="step-11-configure-odoo"></a>
 ## Step 11: Configure Odoo
 1. Create and edit `/etc/odoo.conf` to add the Odoo configuration.
@@ -176,29 +176,29 @@ sudo chown odoo:odoo /var/log/odoo
 <a name="step-12-configure-reverse-proxy"></a>
 ## Step 12: Configure Reverse Proxy
 1. Edit the Nginx configuration file `/etc/nginx/sites-available/test.server1.example.com` and configure the reverse proxy settings.
-```
-nano /etc/nginx/sites-available/test.server1.example.com
-```
+    ```
+    nano /etc/nginx/sites-available/test.server1.example.com
+    ```
 add this following configuration to the server
-```
-location / {
-            proxy_pass http://localhost:8069/;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-
-            # CORS headers
-            add_header 'Access-Control-Allow-Origin' '*' always;
-            add_header 'Access-Control-Max-Age' '300' always;
-            add_header 'Access-Control-Allow-Headers' 'x-requested-with, Content-Type, Access-Token, access-token, origin, authorization, accept, client-security-token' always;
-            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS, HEAD, CONNECT, TRACE, PATCH' always;
-
-            # Cache Control
-            add_header 'Cache-Control' 'max-age=300, no-cache' always;
-    }
-
-```
+    ```
+    location / {
+                proxy_pass http://localhost:8069/;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+    
+                # CORS headers
+                add_header 'Access-Control-Allow-Origin' '*' always;
+                add_header 'Access-Control-Max-Age' '300' always;
+                add_header 'Access-Control-Allow-Headers' 'x-requested-with, Content-Type, Access-Token, access-token, origin, authorization, accept, client-security-token' always;
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS, HEAD, CONNECT, TRACE, PATCH' always;
+    
+                # Cache Control
+                add_header 'Cache-Control' 'max-age=300, no-cache' always;
+        }
+    
+    ```
 
 ---
 
