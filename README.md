@@ -22,6 +22,8 @@
   4. Connect via SSH using the provided key pair.
 <a name="step-2-configure-the-hostname-and-hosts"></a>
 ## Step 2: Configure the Hostname and Hosts
+> :warning: **Nota Bene:** When following the instructions, be sure to replace `server1.example.com` in the `/etc/hosts` file with your actual server's hostname. This is crucial for the correct network configuration of your server.
+
 1. Edit `/etc/hosts`file :
 ```
 nano /etc/hosts
