@@ -16,8 +16,8 @@
     
 <a name="step-1-aws-ec2-setup"></a>
 ## Step 1: AWS EC2 Setup
-  1. Launch a Debian 12 instance (e.g., t3.small).
-  2. Configure key pair (RSA), storage (16 GB).
+  1. Launch a `Debian 12` instance (e.g., t3.small).
+  2. Configure `key pair (RSA)`, `storage` (16 GB).
   3. Set up security groups to allow all traffic initially.
   4. Connect via SSH using the provided key pair.
 ...
