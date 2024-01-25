@@ -20,10 +20,21 @@
   2. Configure `key pair (RSA)`, `storage` (16 GB).
   3. Set up security groups to allow all traffic initially.
   4. Connect via SSH using the provided key pair.
-...
 <a name="step-2-configure-the-hostname-and-hosts"></a>
 ## Step 2: Configure the Hostname and Hosts
-...
+1. Edit `/etc/hosts`:
+bach
+```
+127.0.0.1 localhost.localdomain   localhost
+# This line should be changed to the correct servername:
+127.0.1.1 server1.example.com server1
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+```
+2. 
 <a name="step-3-update-operating-system"></a>
 ## Step 3: Update Operating System
 ...
