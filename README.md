@@ -68,7 +68,10 @@ We can easily choose not to use certain functions or to install additional servi
 to install additional services ```--use-``` to choose not to use certain functions ```--no-```. 
 <a name="step-5-configure-ispconfig"></a>
 ## Step 5: Configure ISPConfig
-...
+*Note: Your ISPConfig and MySQL root passwords will be displayed.*
+1. Connect to ISPConfig: `https://server1.example.com:8080/login/`.
+2. Create a client with provided details.
+3. Set up Web Domain `test.server1.example.com` and configure HTTP to HTTPS redirection.
 <a name="step-6-setting-up-the-firewall"></a>
 ## Step 6: Setting Up the Firewall
 ...
