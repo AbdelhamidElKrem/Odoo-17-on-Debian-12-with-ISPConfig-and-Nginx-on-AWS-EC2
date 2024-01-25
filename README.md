@@ -74,22 +74,67 @@ to install additional services ```--use-``` to choose not to use certain functio
 3. Set up Web Domain `test.server1.example.com` and configure HTTP to HTTPS redirection.
 <a name="step-6-setting-up-the-firewall"></a>
 ## Step 6: Setting Up the Firewall
-...
+**Configure the firewall to allow ports:** `20, 21, 22, 25, 80, 443, 40110-40210, 110, 143, 465, 587, 993, 995, 53, 8080, 8081`.
 <a name="step-7-install-dependencies-for-odoo"></a>
 ## Step 7: Install Dependencies for Odoo
-...
+```
+sudo apt install python3 python3-dev python3-pip python3-venv python3-setuptools build-essential libzip-dev libxslt1-dev libldap2-dev python3-wheel libsasl2-dev node-less libjpeg-dev xfonts-75dpi xfonts-base libpq-dev libffi-dev fontconfig git wget nodejs npm
+```
 <a name="step-8-install-and-configure-postgresql"></a>
 ## Step 8: Install and Configure PostgreSQL
-...
+1. Install PostgreSQL
+```
+sudo apt-get install postgresql-15
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+```
+2. Create a PostgreSQL user for Odoo
+```
+sudo su - postgres -c "createuser -s odoo"
+```
 <a name="step-9-install-nodejs-and-wkhtmltopdf"></a>
 ## Step 9: Install Node.js and wkhtmltopdf
-...
+1. Install Node.js and npm
+```
+sudo apt install nodejs npm
+sudo npm install -g rtlcss
+```
+2. Install wkhtmltopdf
+```
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
+sudo dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
+```
 <a name="step-10-create-an-odoo-user-and-install-odoo"></a>
 ## Step 10: Create an Odoo User and Install Odoo
-...
+1. Create a user for Odoo
+```
+sudo adduser --system --group --home=/opt/odoo --shell=/bin/bash odoo
+sudo su - odoo
+```
+2. Clone the Odoo repository and install dependencies:
+```
+git clone https://www.github.com/odoo/odoo --depth 1 --branch 17.0 /opt/odoo/odoo
+python3 -m venv odoo-env
+source odoo-env/bin/activate
+pip3 install wheel
+pip3 install -r odoo/requirements.txt
+deactivate
+```
+3. Create a directory for custom addons and set permissions:
+```
+mkdir /opt/odoo/custom-addons
+exit
+sudo mkdir /var/log/odoo
+sudo chown odoo:odoo /var/log/odoo
+```
 <a name="step-11-configure-odoo"></a>
 ## Step 11: Configure Odoo
-...
+1. Create and edit `/etc/odoo.conf` to add the Odoo configuration.
+   ```
+    ```
+3. Create and edit `/etc/systemd/system/odoo.service` for systemd service configuration.
+   
+5. Enable and start the Odoo service:
 <a name="step-12-configure-reverse-proxy"></a>
 ## Step 12: Configure Reverse Proxy
 ...
