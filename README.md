@@ -52,10 +52,11 @@ systemctl reboot
 ```
 <a name="step-3-update-operating-system"></a>
 ## Step 3: Update Operating System
+**Disk Space Confirmation:** A message will appear indicating the additional disk space required for the update. Confirm to proceed by typing **`Y`** 
 ```
 sudo apt update && sudo apt upgrade
 ```
-1.**Disk Space Confirmation:** A message will appear indicating the additional disk space required for the update. Confirm to proceed by typing `Y` 
+
 
 <a name="step-4-install-ispconfig-with-nginx-web-server"></a>
 ## Step 4: Install ISPConfig with Nginx Web Server
