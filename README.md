@@ -131,13 +131,74 @@ sudo chown odoo:odoo /var/log/odoo
 ## Step 11: Configure Odoo
 1. Create and edit `/etc/odoo.conf` to add the Odoo configuration.
    ```
-    ```
+   nano /etc/odoo.conf
+   ```
+   ```
+   [options]
+    admin_passwd = Strong_admin_Password
+    db_host = False
+    db_port = False
+    db_user = odoo
+    db_password = False
+    logfile = /var/log/odoo/odoo-server.log
+    addons_path = /opt/odoo/odoo/addons,/opt/odoo/custom-addons
+    xmlrpc_port = 8069
+   ```
 3. Create and edit `/etc/systemd/system/odoo.service` for systemd service configuration.
+   ```
+    nano /etc/systemd/system/odoo.service
+   ```
+   ```
+   [Unit]
+    Description=Odoo
+    Requires=postgresql.service
+    After=network.target postgresql.service
+    
+    [Service]
+    Type=simple
+    SyslogIdentifier=odoo
+    PermissionsStartOnly=true
+    User=odoo
+    Group=odoo
+    ExecStart=/opt/odoo/odoo-env/bin/python3 /opt/odoo/odoo/odoo-bin -c /etc/odoo.conf
+    StandardOutput=journal+console
+    
+    [Install]
+    WantedBy=multi-user.target
+    ```
    
 5. Enable and start the Odoo service:
+   ```
+    sudo systemctl daemon-reload
+    sudo systemctl start odoo
+    sudo systemctl enable odoo
+   ```
 <a name="step-12-configure-reverse-proxy"></a>
 ## Step 12: Configure Reverse Proxy
-...
+1. Edit the Nginx configuration file `/etc/nginx/sites-available/test.server1.example.com` and configure the reverse proxy settings.
+```
+nano /etc/nginx/sites-available/test.server1.example.com
+```
+add this following configuration to the server
+```
+location / {
+            proxy_pass http://localhost:8069/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            # CORS headers
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Max-Age' '300' always;
+            add_header 'Access-Control-Allow-Headers' 'x-requested-with, Content-Type, Access-Token, access-token, origin, authorization, accept, client-security-token' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS, HEAD, CONNECT, TRACE, PATCH' always;
+
+            # Cache Control
+            add_header 'Cache-Control' 'max-age=300, no-cache' always;
+    }
+
+```
 
 ---
 
