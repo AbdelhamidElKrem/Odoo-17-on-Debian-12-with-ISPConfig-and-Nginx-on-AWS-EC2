@@ -22,19 +22,28 @@
   4. Connect via SSH using the provided key pair.
 <a name="step-2-configure-the-hostname-and-hosts"></a>
 ## Step 2: Configure the Hostname and Hosts
-1. Edit `/etc/hosts`:
-bach
+1. Edit `/etc/hosts`file :
 ```
-127.0.0.1 localhost.localdomain   localhost
+nano /etc/hosts
+```
+```
+127.0.0.1  localhost.localdomain   localhost
 # This line should be changed to the correct servername:
-127.0.1.1 server1.example.com server1
+127.0.1.1  server1.example.com server1
 
 # The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
+::1       localhost ip6-localhost ip6-loopback
+ff02::1   ip6-allnodes
+ff02::2   ip6-allrouters
 ```
-2. 
+
+2. Edit `/etc/hostname` file
+```
+nano /etc/hostname
+```
+```
+server1
+```
 <a name="step-3-update-operating-system"></a>
 ## Step 3: Update Operating System
 ...
