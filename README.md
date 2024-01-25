@@ -44,6 +44,10 @@ nano /etc/hostname
 ```
 server1
 ```
+3. Reboot the server
+```
+systemctl reboot
+```
 <a name="step-3-update-operating-system"></a>
 ## Step 3: Update Operating System
 ...
